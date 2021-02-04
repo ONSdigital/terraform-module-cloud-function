@@ -57,7 +57,7 @@ __Simple python function__
 
 ```terraform
 module "function" {
-  source = "terraform/cloud-function"
+  source = "github.com/ONSdigital/terraform-module-cloud-function"
 
   name             = "file-check"
   source_directory = "./modules/cloud-function"
@@ -68,7 +68,7 @@ __Simple nodejs function__
 
 ```terraform
 module "function" {
-  source = "terraform/cloud-function"
+  source = "github.com/ONSdigital/terraform-module-cloud-function"
 
   name             = "file-check"
   runtime          = "nodejs12"
@@ -80,7 +80,7 @@ __Golang function triggered by a pubsub topic__
 
 ```terraform
 module "function" {
-  source = "terraform/cloud-function"
+  source = "github.com/ONSdigital/terraform-module-cloud-function"
 
   name                   = "file-check"
   source_directory       = "./modules/cloud-function"
@@ -97,7 +97,7 @@ __Nodejs function with monitoring and slack notifications__
 
 ```terraform
 module "function" {
-  source = "../../terraform/cloud-function"
+  source = "github.com/ONSdigital/terraform-module-cloud-function"
 
   name                   = "file-check"
   source_directory       = "./modules/cloud-function"
