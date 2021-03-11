@@ -116,3 +116,15 @@ module "function" {
   }
 }
 ```
+
+## Contributing 
+
+__To Review__
+
+1. Checkout feature branch
+2. Enter your project name [here](review/main.tf#L2) and your state bucket name [here](review/main.tf#L19)
+2. `cd review && terraform init`
+2. Run terraform i.e `terraform <plan/apply>`
+4. Check changes related to feature
+5. Clear up; `terraform destroy` and `git checkout review/main.tf`
+---
