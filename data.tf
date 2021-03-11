@@ -2,7 +2,7 @@ data "google_project" "project" {}
 
 data "archive_file" "source_archive" {
   source_dir  = var.source_directory
-  output_path = "./main.zip"
+  output_path = "./${var.name}.zip"
   type        = "zip"
 
   excludes = [
