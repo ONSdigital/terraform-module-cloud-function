@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - '**.tf'
+      - '**.yml'
     types:
       - opened
       - reopened
@@ -26,7 +27,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/github-script@0.9.0
+      - uses: actions/github-script@v3
+        if: ${{ failure() }}
         env:
           RESULT: "terraform\n${{ steps.fmt.outputs.stdout }}"
         with:
@@ -34,7 +36,8 @@ jobs:
           script: |
             const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
             <details><summary>Show Result</summary>
-            \`\`\`${process.env.RESULT}\`\`\`
+
+            \`\`\`${ process.env.RESULT }\`\`\`
             </details>
             *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Workflow: \`${{ github.workflow }}\`*`;
             github.issues.createComment({
