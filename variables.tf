@@ -92,6 +92,6 @@ variable "slack_channel" {
 }
 
 variable "trigger_http" {
-  default = false
-  description = "Any HTTP request (of a supported type) to the endpoint will trigger function execution."
+  default     = false
+  description = "Any HTTP request to the endpoint will trigger function execution."
 }
