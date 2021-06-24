@@ -31,7 +31,7 @@ resource "google_cloudfunctions_function" "function" {
   }
 }
 
-resource "google_cloudfunctions_function" "function" {
+resource "google_cloudfunctions_function" "http-function" {
   count                 = var.trigger_http ? 1 : 0
   name                  = var.name
   project               = length(var.project) > 0 ? var.project : data.google_project.project.name
