@@ -29,6 +29,12 @@ resource "google_cloudfunctions_function" "function" {
       retry = var.retry_on_failure
     }
   }
+
+  timeouts {
+    create = "10m"
+    update = "10m"
+    delete = "10m"
+  }
 }
 
 resource "google_cloudfunctions_function" "http-function" {
@@ -47,4 +53,10 @@ resource "google_cloudfunctions_function" "http-function" {
   source_archive_object = google_storage_bucket_object.archive.name
 
   trigger_http = var.trigger_http
+
+  timeouts {
+    create = "10m"
+    update = "10m"
+    delete = "10m"
+  }
 }
