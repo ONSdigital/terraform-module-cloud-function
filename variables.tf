@@ -15,6 +15,7 @@ variable "runtime" {
   description = "Optional: The cloud function runtime. See: https://cloud.google.com/functions/docs/concepts/exec#runtimes"
 }
 
+
 variable "project" {
   type        = string
   default     = ""
@@ -88,4 +89,9 @@ variable "slack_token" {
 variable "slack_channel" {
   default     = ""
   description = "Optional: The Slack channel to send alerts to."
+}
+
+variable "trigger_http" {
+  default = false
+  description = "Any HTTP request (of a supported type) to the endpoint will trigger function execution."
 }

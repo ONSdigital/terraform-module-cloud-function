@@ -1,7 +1,7 @@
 locals {
   slack_message = <<-EOT
-    :warning: Function *${google_cloudfunctions_function.function.name}* has exited with either `crash`, `timeout`, `connection error` or `error` :exclamation:
-    <https://console.cloud.google.com/functions/details/${google_cloudfunctions_function.function.region}/${google_cloudfunctions_function.function.name}?project=${var.project}&tab=logs| :cloud_functions: Logs>
+    :warning: Function *${google_cloudfunctions_function.function[0].name}* has exited with either `crash`, `timeout`, `connection error` or `error` :exclamation:
+    <https://console.cloud.google.com/functions/details/${google_cloudfunctions_function.function[0].region}/${google_cloudfunctions_function.function[0].name}?project=${var.project}&tab=logs| :cloud_functions: Logs>
     EOT
 }
 
@@ -9,8 +9,8 @@ resource "google_monitoring_notification_channel" "slack" {
   count = length(var.slack_token) > 0 ? 1 : 0
 
   type         = "slack"
-  display_name = "${google_cloudfunctions_function.function.name} Slack Notification"
-  description  = "A slack notification channel for ${google_cloudfunctions_function.function.name}"
+  display_name = "${google_cloudfunctions_function.function[0].name} Slack Notification"
+  description  = "A slack notification channel for ${google_cloudfunctions_function.function[0].name}"
   enabled      = true
 
   labels = {
@@ -25,12 +25,12 @@ resource "google_monitoring_notification_channel" "slack" {
 resource "google_logging_metric" "metric" {
   count = length(var.slack_token) > 0 ? 1 : 0
 
-  name        = "${google_cloudfunctions_function.function.name}-metric"
-  description = "${google_cloudfunctions_function.function} metric"
+  name        = "${google_cloudfunctions_function.function[0].name}-metric"
+  description = "${google_cloudfunctions_function.function[0]} metric"
 
   filter = <<-EOT
     resource.type="cloud_function"
-    resource.labels.function_name="${google_cloudfunctions_function.function.name}"
+    resource.labels.function_name="${google_cloudfunctions_function.function[0].name}"
     severity="DEBUG"
     "finished with status: 'crash'"
     OR
@@ -46,7 +46,7 @@ resource "google_logging_metric" "metric" {
   }
 
   metric_descriptor {
-    display_name = "${google_cloudfunctions_function.function.name}-metric-descriptor"
+    display_name = "${google_cloudfunctions_function.function[0].name}-metric-descriptor"
     metric_kind  = "DELTA"
     value_type   = "INT64"
 
@@ -60,12 +60,12 @@ resource "google_logging_metric" "metric" {
 resource "google_monitoring_alert_policy" "alert_policy" {
   count = length(var.slack_token) > 0 ? 1 : 0
 
-  display_name          = "${google_cloudfunctions_function.function.name}-alert-policy"
+  display_name          = "${google_cloudfunctions_function.function[0].name}-alert-policy"
   combiner              = "OR"
   notification_channels = [google_monitoring_notification_channel.slack[0].id]
 
   conditions {
-    display_name = "${google_cloudfunctions_function.function.name} alert policy condition"
+    display_name = "${google_cloudfunctions_function.function[0].name} alert policy condition"
 
     condition_threshold {
       comparison = "COMPARISON_GT"
