@@ -1,5 +1,5 @@
 resource "google_storage_bucket" "source_bucket" {
-  name                        = "source-${var.name}-bucket"
+  name                        = "source-${var.project != "" ? "${var.project}-" : ""}${var.name}-bucket"
   force_destroy               = true
   location                    = upper(var.region)
   uniform_bucket_level_access = true
