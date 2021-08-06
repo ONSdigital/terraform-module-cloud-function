@@ -95,3 +95,8 @@ variable "trigger_http" {
   default     = false
   description = "Any HTTP request to the endpoint will trigger function execution."
 }
+
+variable "src_bucket_name" {
+  description = "Override the name of the cloud function source bucket."
+  default = ""
+}
