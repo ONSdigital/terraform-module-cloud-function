@@ -5,6 +5,7 @@ data "archive_file" "source_archive" {
   output_path = "./${var.name}.zip"
   type        = "zip"
 
+
   excludes = [
     "venv",
     "node_modules",
