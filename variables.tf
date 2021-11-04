@@ -98,5 +98,5 @@ variable "trigger_http" {
 
 variable "src_bucket_name" {
   description = "Override the name of the cloud function source bucket."
-  default = ""
+  default     = ""
 }
